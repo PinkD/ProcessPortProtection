@@ -1,0 +1,7 @@
+test*
+*.crt
+*.key
+*.csr
+*.srl
+__pycache__
+.idea
