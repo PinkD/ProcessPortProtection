@@ -2,15 +2,15 @@
 
 [简体中文](README-zh_CN.md) | [English](README.md)
 
-Protect a port using `iptables`
+该软件使用 `iptables` 来保护一个端口
 
-It drops the connection to the protected port by default and starts a daemon to linsten on a port to authorize client, add client to an access list so that client can access to the protected port. 
+通过默认丢弃被保护端口的连接，开启另一个端口来授权，将被授权的客户端地址添加进白名单，白名单中客户端即可连接被保护的端口
 
-## Usage
+## 用法
 
-### server
+### 服务端
 
-Before you use it, you should generate your own tls cert. Use [gen.sh](certs/gen.sh) to do that.
+在使用本软件之前，你需要手动生成tls证书，本软件提供了脚本： [gen.sh](certs/gen.sh)
 
 ```
 usage: main.py [-h] [-v] [-i interface] [-p port] [-pp port] [-k key]
@@ -28,26 +28,26 @@ optional arguments:
   -f file, --file file  access key file with single line password in it
 ```
 
-### client
+### 客户端
 
-TLS was used in the project, so you can use openssl or curl to request.
+该软件使用了TLS来加密，因此你需要使用 `openssl` 或 `curl` 来进行请求
 
 #### openssl:
 
 `openssl s_client -connect server_ip:port`
 
-then you input `key=xxx` to authorize.
+然后输入 `key=xxx` 来授权
 
 
 #### curl
 
 `curl -k https://server_ip:port/ -d "key=xxx"`
 
-### other options
+### 其他参数
 
 #### time:
-- type: integer
-- unit: hour
-- meaning: available time
-- e.g.: time=12 means this authorization will last 12h
-- code: `curl -k https://server_ip:port/ -d "key=xxx&time=12"`
+- 类型: int
+- 单位: 小时
+- 意义: 可用时间
+- 例: time=12 表示授权可用时间为12小时
+- 代码: `curl -k https://server_ip:port/ -d "key=xxx&time=12"`
